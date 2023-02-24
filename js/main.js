@@ -17,24 +17,37 @@ form.addEventListener('submit', e => {
         return response.json()
     }).then(data => {
         console.log(data);
-        console.log(data.location.name);
-        console.log(data.location.country);
-        console.log(data.current.temp_c);
-        console.log(data.current.condition.text);
-        
-        // create weather card
-        const cardHTML = `
-        <section class="card">
-            <h2 class="card__city">${data.location.name}<span class="card__country">${data.location.country}</span></h2>
-            <div class="card__weather">
-                <div class="card__value">${data.current.temp_c}<sup>°с</sup></div>
-                <img class="card__img" src="./img/27 1.png" alt="sun">
-            </div>
-            <p class="card__description">${data.current.condition.text}</p>
-        </section>`;
 
-        // add card on page
-        header.insertAdjacentHTML('afterend', cardHTML);
+        // error checking
+        if(data.error) {
+            // check and delete the previous card
+            const prevCard = document.querySelector('.card');
+            if(prevCard) prevCard.remove();
+
+            // show error message
+            const cardHTML = `<section class="card">${data.error.message}</section>`;
+
+            // add card on page
+            header.insertAdjacentHTML('afterend', cardHTML);
+        } else {
+            // check and delete the previous card
+            const prevCard = document.querySelector('.card');
+            if(prevCard) prevCard.remove();
+        
+            // create weather card
+            const cardHTML = `
+            <section class="card">
+                <h2 class="card__city">${data.location.name}<span class="card__country">${data.location.country}</span></h2>
+                <div class="card__weather">
+                    <div class="card__value">${Math.round(data.current.temp_c)}<sup>°с</sup></div>
+                    <img class="card__img" src="./img/27 1.png" alt="sun">
+                </div>
+                <p class="card__description">${data.current.condition.text}</p>
+            </section>`;
+
+            // add card on page
+            header.insertAdjacentHTML('afterend', cardHTML);
+        }
 
 
     })
