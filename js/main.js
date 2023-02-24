@@ -18,7 +18,7 @@ function showCardWeather(data) {
         <h2 class="card__city">${data.location.name}<span class="card__country">${data.location.country}</span></h2>
         <div class="card__weather">
             <div class="card__value">${Math.round(data.current.temp_c)}<sup>°с</sup></div>
-            <img class="card__img" src="./img/27 1.png" alt="sun">
+            <img class="card__img" src="${data.current.condition.icon}" alt="sun">
         </div>
         <p class="card__description">${data.current.condition.text}</p>
     </section>`;
@@ -29,9 +29,6 @@ async function getWeather(city) {
     const url =  `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`;
     const respons = await fetch(url);
     const data = await respons.json();
-
-    console.log(data);
-
     return data;
 }
 
