@@ -4,6 +4,7 @@ const header = document.querySelector('.header');
 const form = document.querySelector('.header__form');
 const input = document.querySelector('.header__input');
 
+
 function removeCard() {
     const prevCard = document.querySelector('.card');
     if(prevCard) prevCard.remove();
